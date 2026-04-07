@@ -21,11 +21,11 @@ def zeroCrossingRate(window, threshold = 1e-6):
 
     return zc
 
-def waveform_length(window):
+def waveformLength(window):
     """Waveform Length — captures complexity of contraction pattern."""
     return np.sum(np.abs(np.diff(window)))
 
-def extract_features(window):
+def extractFeatures(window):
     """
     Extract time-domain feature vector from a multi-channel EMG window.
     
@@ -42,11 +42,11 @@ def extract_features(window):
             mav(ch_signal),
             rms(ch_signal),
             zeroCrossingRate(ch_signal),
-            waveform_length(ch_signal)
+            waveformLength(ch_signal)
         ])
     return np.array(features)
 
-def extract_all_windows(emg_filtered, labels, fs=FS, 
+def extractAllWindows(emg_filtered, labels, fs=FS, 
                         window_ms=WINDOW_MS, step_ms=STEP_MS):
     """
     Extract feature matrix from full EMG recording using sliding window.
@@ -70,7 +70,7 @@ def extract_all_windows(emg_filtered, labels, fs=FS,
         end = start + window_samples
         window = emg_filtered[start:end, :]
         label = labels[start + window_samples//2, 0]
-        X.append(extract_features(window))
+        X.append(extractFeatures(window))
         y.append(label)
     
     return np.array(X), np.array(y)

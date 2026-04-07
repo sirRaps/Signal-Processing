@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import butter, filtfilt
 from config import FS, LOWCUT, HIGHCUT, FILTER_ORDER
 
-def bandpassFilter(signal, lowcut=LOWCUT, highcut=HIGHCUT, fs=FS, order=FILTER_ORDER):
+def bandpass_filter(signal, lowcut=LOWCUT, highcut=HIGHCUT, fs=FS, order=FILTER_ORDER):
     """
     Apply zero-phase Butterworth bandpass filter to EMG signal.
     
@@ -22,7 +22,7 @@ def bandpassFilter(signal, lowcut=LOWCUT, highcut=HIGHCUT, fs=FS, order=FILTER_O
     
     return filtfilt(b, a, signal)
 
-def filterAllChannels(emg):
+def filter_all_channels(emg):
     """
     Apply bandpass filter to all channels of an EMG matrix.
     
@@ -33,14 +33,14 @@ def filterAllChannels(emg):
         Filtered EMG matrix of same shape
     """
     
-    emgFiltered = np.zeros_like(emg)
+    emg_filtered = np.zeros_like(emg)
 
     for ch in range(emg.shape[1]):
-        emgFiltered[:, ch] = bandpassFilter(emg[:, ch])
+        emg_filtered[:, ch] = bandpass_filter(emg[:, ch])
 
-    return emgFiltered
+    return emg_filtered
 
-def getEnvelope(signal, windowMs = 200, fs = FS):
+def get_envelope(signal, window_ms=200, fs=FS):
     """
     Compute EMG envelope using sliding RMS window.
     
@@ -53,10 +53,10 @@ def getEnvelope(signal, windowMs = 200, fs = FS):
         Envelope signal as 1D numpy array
     """
 
-    windowSamples = int(windowMs * fs / 1000)
+    window_samples = int(window_ms * fs / 1000)
     envelope = np.array([
-        np.sqrt(np.mean(signal[i:i+windowSamples]**2))
-        for i in range(len(signal) - windowSamples)
+        np.sqrt(np.mean(signal[i:i + window_samples]**2))
+        for i in range(len(signal) - window_samples)
     ])
 
     return envelope

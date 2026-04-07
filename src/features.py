@@ -16,7 +16,7 @@ def zeroCrossingRate(window, threshold = 1e-6):
     zc = 0
     for i in range(1, len(window)):
         if ((window[i] >= threshold and window[i-1] < threshold) or
-            (window[i] < -threshold and window[i-1 >= -threshold])):
+            (window[i] < -threshold and window[i-1] >= -threshold)):
             zc += 1
 
     return zc

@@ -40,7 +40,7 @@ def filterAllChannels(emg):
 
     return emgFiltered
 
-def get_envelope(signal, windowMs = 200, fs = FS):
+def getEnvelope(signal, windowMs = 200, fs = FS):
     """
     Compute EMG envelope using sliding RMS window.
     
